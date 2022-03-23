@@ -75,10 +75,10 @@ void main()
 
     }
     //display averages
-    average3 = total3 / SIZE;
-    cout << "Average comparisons in Sequential Search: " << average1 << endl;
-    average4 = total4 / SIZE;
-    cout << "Average comparisons in Binary Search: " << average2;
+    average3 = total3 / SEARCHSIZE;
+    cout << "Average comparisons in Sequential Search: " << average3 << endl;
+    average4 = total4 / SEARCHSIZE;
+    cout << "Average comparisons in Binary Search: " << average4;
 
   
 }
@@ -99,10 +99,11 @@ int selectionSort(int arr[], int length) {
     for (int i = 0; i < length - 1; i++) {
         int min_index = i;
         for (int j = i + 1; j < length; j++) {
+            
             if (arr[j] < arr[min_index]) {
                 min_index = j;
-                count++;
             }
+            count++;
         }
         swap(arr, i, min_index);
     }
@@ -118,6 +119,7 @@ int recQuickSort(int arr[], int first, int last,int &counter) {
     int pivotLocation;
 
     if (first < last) {
+        counter++;
         pivotLocation = partition(arr, first, last, counter);
         recQuickSort(arr, first, pivotLocation - 1, counter);
         recQuickSort(arr, pivotLocation + 1, last, counter);  
@@ -133,12 +135,13 @@ int partition(int arr[], int first, int last,int &counter) {
     pivot = arr[first];
     smallIndex = first;
     
-    for (int index = first + 1; index <= last; index++) 
+    for (int index = first + 1; index <= last; index++) {
         if (arr[index] < pivot) {
-            counter++;
             smallIndex++;
-            swap(arr, smallIndex, index); 
+            swap(arr, smallIndex, index);
         }
+        counter++;
+    }
     swap(arr, first, smallIndex);
    
     
@@ -159,9 +162,9 @@ int seqSearch(int arr[], int size, int target) {
     int index = 0, count = 0;
 
     for(int i = 0; i < size; i++) {
-        count++;
         if (arr[index] == target)
             break;
+        count++;
     }
     return count;
 }
@@ -173,9 +176,10 @@ int binarySearch(int arr[], int size, int target) {
     int count = 0;
 
     while (start <= end) {
+        count++;
         mid = (start + end) / 2;
         if (arr[mid] == target) {
-            return count++;
+            return count;
         }
         else if (arr[mid] > target) {
             count++;
